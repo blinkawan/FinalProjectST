@@ -35,4 +35,5 @@ public class SecurityIT {
         .expect().rootPath("http://localhost:8080/public/login/form")
         .when().get("http://localhost:8080/admin");
     }
+    
 }

@@ -32,7 +32,7 @@ public class CustomerServiceImplTest {
         Customer customerSaved=new CustomerBuilder().id(1L).username(customerToSave.getUsername())
                                    .fullName(customerToSave.getFullName()).email(customerToSave.getEmail())
                                    .password(customerToSave.getPassword()).address(customerToSave.getAddress())
-                                   .phone(customerToSave.getPassword()).build();
+                                   .phone(customerToSave.getPhone()).build();
         
         Mockito.when(customerDao.save(customerToSave)).thenReturn(customerSaved);
         
@@ -42,9 +42,13 @@ public class CustomerServiceImplTest {
         Mockito.verifyNoMoreInteractions(customerDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertNotNull(actual.getId());
-        Assert.assertEquals(customerSaved, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
         Assert.assertEquals("blinkawan", actual.getUsername());
+        Assert.assertEquals("Agung Setiawan", actual.getFullName());
+        Assert.assertEquals("blinkawan@gmail.com", actual.getEmail());
+        Assert.assertEquals("greatengineer", actual.getPassword());
+        Assert.assertEquals("Semarang", actual.getAddress());
+        Assert.assertEquals("089667754239", actual.getPhone());
     }
     
     @Test
@@ -61,8 +65,13 @@ public class CustomerServiceImplTest {
         Mockito.verifyNoMoreInteractions(customerDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(customer, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("blinkawan", actual.getUsername());
         Assert.assertEquals("Agung Setiawan", actual.getFullName());
+        Assert.assertEquals("blinkawan@gmail.com", actual.getEmail());
+        Assert.assertEquals("greatengineer", actual.getPassword());
+        Assert.assertEquals("Semarang", actual.getAddress());
+        Assert.assertEquals("089667754239", actual.getPhone());
     }
     
     @Test
@@ -79,7 +88,12 @@ public class CustomerServiceImplTest {
         Mockito.verifyNoMoreInteractions(customerDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(customer, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("blinkawan", actual.getUsername());
         Assert.assertEquals("Agung Setiawan", actual.getFullName());
+        Assert.assertEquals("blinkawan@gmail.com", actual.getEmail());
+        Assert.assertEquals("greatengineer", actual.getPassword());
+        Assert.assertEquals("Semarang", actual.getAddress());
+        Assert.assertEquals("089667754239", actual.getPhone());
     }
 }

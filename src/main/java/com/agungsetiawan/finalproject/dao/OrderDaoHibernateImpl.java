@@ -28,26 +28,22 @@ public class OrderDaoHibernateImpl implements OrderDao{
             orderDetailDao.save(detail);
         }
         return order;
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Order findOne(Long id) {
         return (Order) sessionFactory.getCurrentSession().get(Order.class, id);
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Order> findByCustomer(String username) {
         return sessionFactory.getCurrentSession().createQuery("select o from Order o where o.customer.username=:customer")
                 .setParameter("customer", username).list();
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public List<Order> findAll() {
         return sessionFactory.getCurrentSession().createQuery("select o from Order o").list();
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -55,6 +51,4 @@ public class OrderDaoHibernateImpl implements OrderDao{
         sessionFactory.getCurrentSession().merge(order);
         return order;
     }
-    
-    
 }

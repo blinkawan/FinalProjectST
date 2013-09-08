@@ -31,6 +31,7 @@ public class Order implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private BigDecimal total;
+   
     private String status;
 
     public Order() {

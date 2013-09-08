@@ -47,10 +47,14 @@ public class BookServiceImplTest {
         
         Mockito.verify(bookDao, Mockito.times(1)).save(bookToSave);
         Mockito.verifyNoMoreInteractions(bookDao);
-        
-        Assert.assertEquals(bookSaved, actual);
-        Assert.assertNotNull(actual.getId());
-        Assert.assertEquals(bookSaved.getId(), actual.getId()); 
+
+        Assert.assertNotNull(actual);
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("Java Testing",actual.getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.getImage()); 
     }
     
     @Test
@@ -70,9 +74,13 @@ public class BookServiceImplTest {
         Mockito.verify(bookDao,Mockito.times(1)).edit(bookToUpdate);
         Mockito.verifyNoMoreInteractions(bookDao);
         
-        Assert.assertEquals(bookUpdated, actual);
-        Assert.assertNotNull(actual.getId());
-        Assert.assertEquals(bookUpdated.getId(), actual.getId());
+        Assert.assertNotNull(actual);
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("Java Testing 2nd Edition",actual.getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.getImage()); 
     }
     
     @Test
@@ -88,9 +96,13 @@ public class BookServiceImplTest {
         Mockito.verify(bookDao,Mockito.times(1)).delete(bookToDelete);
         Mockito.verifyNoMoreInteractions(bookDao);
         
-        Assert.assertEquals(bookToDelete, actual);
         Assert.assertNotNull(actual);
-        Assert.assertEquals(bookToDelete.getId(), actual.getId());
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("Java Testing",actual.getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.getImage()); 
     }
     
     @Test
@@ -105,11 +117,14 @@ public class BookServiceImplTest {
         
         Mockito.verify(bookDao,Mockito.times(1)).findOne(1L);
         Mockito.verifyNoMoreInteractions(bookDao);
-        
+       
         Assert.assertNotNull(actual);
-        Assert.assertEquals(bookToFind, actual);
-        Assert.assertEquals(bookToFind.getId(), actual.getId());
-        Assert.assertEquals(bookToFind.getTitle(), actual.getTitle());
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("Java Testing",actual.getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.getImage()); 
     }
     
     @Test
@@ -132,10 +147,22 @@ public class BookServiceImplTest {
         Mockito.verify(bookDao,Mockito.times(1)).findAll();
         Mockito.verifyNoMoreInteractions(bookDao);
         
-        Assert.assertEquals(books, actual);
         Assert.assertNotNull(actual);
         Assert.assertEquals(2, actual.size());
-        Assert.assertEquals("Java Security", actual.get(1).getTitle());
+        
+        Assert.assertEquals(1L, actual.get(0).getId(),0);
+        Assert.assertEquals("Java Testing",actual.get(0).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(0).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.get(0).getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.get(0).getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.get(0).getImage()); 
+        
+        Assert.assertEquals(2L, actual.get(1).getId(),0);
+        Assert.assertEquals("Java Security",actual.get(1).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(1).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(80000), actual.get(1).getPrice()); 
+        Assert.assertEquals("Good book about Java Security Technique", actual.get(1).getDescription());
+        Assert.assertEquals("java-security.jpg", actual.get(1).getImage()); 
     }
     
     @Test
@@ -163,9 +190,21 @@ public class BookServiceImplTest {
         Mockito.verifyNoMoreInteractions(bookDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(books, actual);
-        Assert.assertEquals("Java", actual.get(0).getCategory().getName());
-        Assert.assertEquals("Java Security", actual.get(1).getTitle());
+        Assert.assertEquals(2, actual.size());
+        
+        Assert.assertEquals(1L, actual.get(0).getId(),0);
+        Assert.assertEquals("Java Testing",actual.get(0).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(0).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.get(0).getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.get(0).getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.get(0).getImage()); 
+        
+        Assert.assertEquals(2L, actual.get(1).getId(),0);
+        Assert.assertEquals("Java Security",actual.get(1).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(1).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(80000), actual.get(1).getPrice()); 
+        Assert.assertEquals("Good book about Java Security Technique", actual.get(1).getDescription());
+        Assert.assertEquals("java-security.jpg", actual.get(1).getImage()); 
     }
     
     @Test
@@ -190,9 +229,21 @@ public class BookServiceImplTest {
         Mockito.verifyNoMoreInteractions(bookDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(books, actual);
-        Assert.assertEquals("Java Security", actual.get(1).getTitle());
-        Assert.assertEquals("Java Testing", actual.get(0).getTitle());
+        Assert.assertEquals(2, actual.size());
+        
+        Assert.assertEquals(1L, actual.get(0).getId(),0);
+        Assert.assertEquals("Java Testing",actual.get(0).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(0).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.get(0).getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.get(0).getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.get(0).getImage()); 
+        
+        Assert.assertEquals(2L, actual.get(1).getId(),0);
+        Assert.assertEquals("Java Security",actual.get(1).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(1).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(80000), actual.get(1).getPrice()); 
+        Assert.assertEquals("Good book about Java Security Technique", actual.get(1).getDescription());
+        Assert.assertEquals("java-security.jpg", actual.get(1).getImage()); 
     }
     
     @Test
@@ -222,7 +273,20 @@ public class BookServiceImplTest {
         Mockito.verifyNoMoreInteractions(bookDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(books, actual);
         Assert.assertEquals(3, actual.size());
+        
+        Assert.assertEquals(1L, actual.get(0).getId(),0);
+        Assert.assertEquals("Java Testing",actual.get(0).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(0).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(70000), actual.get(0).getPrice()); 
+        Assert.assertEquals("Good book about Java Testing Technique", actual.get(0).getDescription());
+        Assert.assertEquals("java-testing.jpg", actual.get(0).getImage()); 
+        
+        Assert.assertEquals(2L, actual.get(1).getId(),0);
+        Assert.assertEquals("Java Security",actual.get(1).getTitle()); 
+        Assert.assertEquals("Agung Setiawan", actual.get(1).getAuthor()); 
+        Assert.assertEquals(new BigDecimal(80000), actual.get(1).getPrice()); 
+        Assert.assertEquals("Good book about Java Security Technique", actual.get(1).getDescription());
+        Assert.assertEquals("java-security.jpg", actual.get(1).getImage()); 
     }
 }

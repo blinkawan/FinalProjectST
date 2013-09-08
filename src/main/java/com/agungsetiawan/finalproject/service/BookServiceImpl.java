@@ -40,14 +40,15 @@ public class BookServiceImpl implements BookService{
     @Override
     public Book findOne(Long id) {
         Book bookFound=bookDao.findOne(id);
-//        Book book=new Book(bookFound.getTitle()+" NEW", bookFound.getAuthor(), bookFound.getDescription()
-//                , bookFound.getPrice(), bookFound.getImage());
-//        return book;
+//        bookFound.setTitle(bookFound.getTitle()+" NEW");
         return bookFound;
     }
 
     @Override
     public List<Book> findAll() {
+//        List<Book> books=bookDao.findAll();
+//        books.add(new Book());
+//        return books;
         return bookDao.findAll();
     }
 
@@ -64,6 +65,11 @@ public class BookServiceImpl implements BookService{
     @Override
     public List<Book> findRandom() {
         return bookDao.findRandom();
+    }
+
+    @Override
+    public List<Book> findRandomFive() {
+        return bookDao.findRandomFive();
     }
     
 }

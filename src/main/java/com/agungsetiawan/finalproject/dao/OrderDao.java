@@ -1,6 +1,5 @@
 package com.agungsetiawan.finalproject.dao;
 
-import com.agungsetiawan.finalproject.domain.Customer;
 import com.agungsetiawan.finalproject.domain.Order;
 import java.util.List;
 

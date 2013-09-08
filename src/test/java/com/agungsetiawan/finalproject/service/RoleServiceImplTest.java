@@ -35,7 +35,8 @@ public class RoleServiceImplTest {
         Mockito.verifyNoMoreInteractions(roleDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(role, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
         Assert.assertEquals("ROLE_ADMIN", actual.getName());
+        Assert.assertEquals(1, actual.getRole(),0);
     }
 }

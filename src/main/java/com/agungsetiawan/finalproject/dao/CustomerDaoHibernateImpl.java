@@ -19,20 +19,17 @@ public class CustomerDaoHibernateImpl implements CustomerDao{
     public Customer save(Customer customer) {
         sessionFactory.getCurrentSession().save(customer);
         return customer;
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Customer findOne(Long id) {
         return (Customer) sessionFactory.getCurrentSession().get(Customer.class, id);
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public Customer findByUsername(String username) {
         return (Customer) sessionFactory.getCurrentSession().createQuery("select c from Customer c where c.username=:username")
                 .setParameter("username", username).uniqueResult();
-//        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

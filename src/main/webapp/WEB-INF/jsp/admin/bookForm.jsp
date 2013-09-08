@@ -65,7 +65,7 @@
                                 <td><input type="file" name="fileUpload" /></td>
                             </tr>
                             <tr>
-                                <td><input type="submit" value="Daftar"/></td>
+                                <td><input type="submit" value="Simpan"/></td>
                             </tr>
                         </table>
                     </form:form>

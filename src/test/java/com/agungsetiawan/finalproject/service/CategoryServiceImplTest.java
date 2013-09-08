@@ -39,9 +39,10 @@ public class CategoryServiceImplTest {
         Mockito.verifyNoMoreInteractions(categoryDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(categorySaved, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
         Assert.assertEquals("Java", actual.getName());
-        Assert.assertEquals(categorySaved.getId(), actual.getId());
+        Assert.assertEquals("Java Book Category", actual.getDescription());
+        
     }
     
     @Test
@@ -58,8 +59,9 @@ public class CategoryServiceImplTest {
         Mockito.verifyNoMoreInteractions(categoryDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(categoryEdited, actual);
-        Assert.assertNotEquals(categoryToEdit.getName(), actual.getName());
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("Java Testing", actual.getName());
+        Assert.assertEquals("Java Book Category", actual.getDescription());
     }
     
     @Test
@@ -74,7 +76,8 @@ public class CategoryServiceImplTest {
         Mockito.verifyNoMoreInteractions(categoryDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(categoryToDelete, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
+        Assert.assertEquals("Java", actual.getName());
         Assert.assertEquals("Java Book Category", actual.getDescription());
     }
     
@@ -90,14 +93,16 @@ public class CategoryServiceImplTest {
         Mockito.verifyNoMoreInteractions(categoryDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(categoryJava, actual);
+        Assert.assertEquals(1L, actual.getId(),0);
         Assert.assertEquals("Java", actual.getName());
+        Assert.assertEquals("Java Book Category", actual.getDescription());
     }
     
     @Test
     public void findAllTest(){
         Category categoryJava=new CategoryBuilder().id(1L).name("Java").description("Java Book Category").build();
         Category categoryPhp=new CategoryBuilder().id(2L).name("Php").description("Php Book Category").build();
+      
         List<Category> categories=new ArrayList<Category>();
         categories.add(categoryJava);
         categories.add(categoryPhp);
@@ -109,8 +114,14 @@ public class CategoryServiceImplTest {
         Mockito.verify(categoryDao,Mockito.times(1)).findAll();
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(categories, actual);
+        Assert.assertEquals(2, actual.size());
+        
+        Assert.assertEquals(1L, actual.get(0).getId(),0);
         Assert.assertEquals("Java", actual.get(0).getName());
+        Assert.assertEquals("Java Book Category", actual.get(0).getDescription());
+        
+        Assert.assertEquals(2L, actual.get(1).getId(),0);
         Assert.assertEquals("Php", actual.get(1).getName());
+        Assert.assertEquals("Php Book Category", actual.get(1).getDescription());
     }
 }

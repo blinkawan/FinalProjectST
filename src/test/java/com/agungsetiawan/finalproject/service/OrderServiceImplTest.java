@@ -43,7 +43,7 @@ public class OrderServiceImplTest {
                              .date(orderToSave.getDate()).province(orderToSave.getProvince())
                              .receiver(orderToSave.getReceiver()).receiverEmail(orderToSave.getReceiverEmail())
                              .receiverPhone(orderToSave.getReceiverPhone()).shippingAddress(orderToSave.getShippingAddress())
-                             .status(orderToSave.getShippingAddress()).build();
+                             .status(orderToSave.getStatus()).build();
         
         Mockito.when(orderDao.save(orderToSave)).thenReturn(orderSaved);
         
@@ -53,8 +53,15 @@ public class OrderServiceImplTest {
         Mockito.verifyNoMoreInteractions(orderDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertNotNull(actual.getId());
-        Assert.assertEquals(orderSaved.getId(), actual.getId());
+        Assert.assertEquals("Semarang", actual.getCity());
+        Assert.assertEquals(new Date(2013, 6, 26), actual.getDate());
+        Assert.assertEquals("Jawa Tengah", actual.getProvince());
+        Assert.assertEquals("Agung Setiawan", actual.getReceiver());
+        Assert.assertEquals("blinkawan@gmail.com", actual.getReceiverEmail());
+        Assert.assertEquals("089667754239", actual.getReceiverPhone());
+        Assert.assertEquals("Semarang 2", actual.getShippingAddress());
+        Assert.assertEquals("baru", actual.getStatus());
+        Assert.assertEquals("blinkawan", actual.getCustomer().getUsername());
         Assert.assertEquals("Agung Setiawan", actual.getCustomer().getFullName());
     }
     
@@ -73,8 +80,15 @@ public class OrderServiceImplTest {
         Mockito.verifyNoMoreInteractions(orderDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(order, actual);
+        Assert.assertNotNull(actual);
+        Assert.assertEquals("Semarang", actual.getCity());
+        Assert.assertEquals(new Date(2013, 6, 26), actual.getDate());
+        Assert.assertEquals("Jawa Tengah", actual.getProvince());
+        Assert.assertEquals("Agung Setiawan", actual.getReceiver());
+        Assert.assertEquals("blinkawan@gmail.com", actual.getReceiverEmail());
+        Assert.assertEquals("089667754239", actual.getReceiverPhone());
         Assert.assertEquals("Semarang 2", actual.getShippingAddress());
+        Assert.assertEquals("baru", actual.getStatus());
     }
     
     @Test
@@ -106,9 +120,25 @@ public class OrderServiceImplTest {
         Mockito.verifyNoMoreInteractions(orderDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(orders, actual);
+        Assert.assertEquals(2, actual.size());
+        
+        Assert.assertEquals("Semarang", actual.get(0).getCity());
+        Assert.assertEquals(new Date(2013, 6, 26), actual.get(0).getDate());
+        Assert.assertEquals("Jawa Tengah", actual.get(0).getProvince());
         Assert.assertEquals("Agung Setiawan", actual.get(0).getReceiver());
+        Assert.assertEquals("blinkawan@gmail.com", actual.get(0).getReceiverEmail());
+        Assert.assertEquals("089667754239", actual.get(0).getReceiverPhone());
+        Assert.assertEquals("Semarang 2", actual.get(0).getShippingAddress());
+        Assert.assertEquals("baru", actual.get(0).getStatus());
+        
+        Assert.assertEquals("Kendal", actual.get(1).getCity());
+        Assert.assertEquals(new Date(2013, 6, 27), actual.get(1).getDate());
+        Assert.assertEquals("Jawa Tengah", actual.get(1).getProvince());
         Assert.assertEquals("Hauril Maulida Nisfari", actual.get(1).getReceiver());
+        Assert.assertEquals("aurielhaurilnisfari@yahoo.com", actual.get(1).getReceiverEmail());
+        Assert.assertEquals("089668237854", actual.get(1).getReceiverPhone());
+        Assert.assertEquals("Semarang 2", actual.get(1).getShippingAddress());
+        Assert.assertEquals("baru", actual.get(1).getStatus());
     }
     
     @Test
@@ -136,8 +166,25 @@ public class OrderServiceImplTest {
         Mockito.verifyNoMoreInteractions(orderDao);
         
         Assert.assertNotNull(actual);
-        Assert.assertEquals(orders, actual);
+        Assert.assertEquals(2, actual.size());
+        
+        Assert.assertEquals("Semarang", actual.get(0).getCity());
+        Assert.assertEquals(new Date(2013, 6, 26), actual.get(0).getDate());
+        Assert.assertEquals("Jawa Tengah", actual.get(0).getProvince());
+        Assert.assertEquals("Agung Setiawan", actual.get(0).getReceiver());
+        Assert.assertEquals("blinkawan@gmail.com", actual.get(0).getReceiverEmail());
+        Assert.assertEquals("089667754239", actual.get(0).getReceiverPhone());
+        Assert.assertEquals("Semarang 2", actual.get(0).getShippingAddress());
+        Assert.assertEquals("baru", actual.get(0).getStatus());
+        
+        Assert.assertEquals("Kendal", actual.get(1).getCity());
+        Assert.assertEquals(new Date(2013, 6, 27), actual.get(1).getDate());
+        Assert.assertEquals("Jawa Tengah", actual.get(1).getProvince());
+        Assert.assertEquals("Hauril Maulida Nisfari", actual.get(1).getReceiver());
         Assert.assertEquals("aurielhaurilnisfari@yahoo.com", actual.get(1).getReceiverEmail());
+        Assert.assertEquals("089668237854", actual.get(1).getReceiverPhone());
+        Assert.assertEquals("Semarang 2", actual.get(1).getShippingAddress());
+        Assert.assertEquals("baru", actual.get(1).getStatus());
         
     }
 }

@@ -18,34 +18,29 @@ public class CategoryDaoHibernateImpl implements CategoryDao{
     
     @Override
     public Category save(Category category) {
-//        throw new UnsupportedOperationException("Not supported yet.");
         sessionFactory.getCurrentSession().save(category);
         return category;
     }
 
     @Override
     public Category edit(Category category) {
-//        throw new UnsupportedOperationException("Not supported yet.");
         sessionFactory.getCurrentSession().merge(category);
         return category;
     }
 
     @Override
     public Category delete(Category category) {
-//        throw new UnsupportedOperationException("Not supported yet.");
         sessionFactory.getCurrentSession().delete(category);
         return category;
     }
 
     @Override
     public Category findOne(Long id) {
-//        throw new UnsupportedOperationException("Not supported yet.");
         return (Category) sessionFactory.getCurrentSession().get(Category.class, id);
     }
 
     @Override
     public List<Category> findAll() {
-//        throw new UnsupportedOperationException("Not supported yet.");
         return sessionFactory.getCurrentSession().createQuery("select c from Category c").list();
     }
     

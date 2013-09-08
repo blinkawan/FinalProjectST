@@ -12,11 +12,15 @@
         <t_book id="3" title="ASP.NET MVC" author="Dimas Jay" description="Good .NET Book" 
               price="33" image="image-aspnet.jpg" id_category="2" />
         
+        <t_role id="1" name="admin" role="1" />
+        
+        <t_role id="2" name="user" role="2" />
+        
         <t_customer id="1" username="agung" password="greatengineer" full_name="Agung Setiawan" 
-                    email="blinkawan@gmail.com" address="Semarang" phone="089667754239" />
+                    email="blinkawan@gmail.com" address="Semarang" phone="089667754239" role_id="1" />
         
         <t_customer id="2" username="hauril" password="greatengineer" full_name="Hauril Maulida Nisfari" 
-                    email="aurielhaurilnisfari@yahoo.com" address="Semarang" phone="089668237854" />
+                    email="aurielhaurilnisfari@yahoo.com" address="Semarang" phone="089668237854" role_id="2" />
         
         <t_order id="1" total="130" status="new" date="2013-07-06" username_customer="1" city="Semarang"
                   province="Jawa Tengah" receiver="Hauril" receiver_email="aurielhaurilnisfari@yahoo.com"
@@ -29,5 +33,7 @@
         <t_order_detail id="1" amount="2" sub_total="60" id_book="1" id_order="1" />
         
         <t_order_detail id="2" amount="2" sub_total="70" id_book="2" id_order="1" />
+        
+        
         
 </dataset>

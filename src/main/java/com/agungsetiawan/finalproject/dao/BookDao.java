@@ -16,4 +16,5 @@ public interface BookDao {
     public List<Book> findByCategory(Long id);
     public List<Book> findByTitle(String title);
     public List<Book> findRandom();
+    public List<Book> findRandomFive();
 }

@@ -2,13 +2,16 @@ package com.agungsetiawan.finalproject.controller;
 
 import com.agungsetiawan.finalproject.domain.Book;
 import com.agungsetiawan.finalproject.domain.Category;
+import com.agungsetiawan.finalproject.exception.NotFoundException;
 import com.agungsetiawan.finalproject.service.BookService;
 import com.agungsetiawan.finalproject.service.CategoryService;
 import com.agungsetiawan.finalproject.util.BookBuilder;
 import com.agungsetiawan.finalproject.util.CategoryBuilder;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -25,7 +28,11 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.hamcrest.Matchers.*;
 import org.hamcrest.text.IsEmptyString;
+import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.mock.web.MockMultipartFile;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 /**
  *
@@ -46,7 +53,8 @@ public class AdminBukuControllerTest {
         adminBukuController=new AdminBukuController(bookService, categoryService);
         view=Mockito.mock(View.class);
         mockMvc= MockMvcBuilders.standaloneSetup(adminBukuController).setSingleView(view)
-                .setViewResolvers(viewResolver()).setValidator(validator()).build();
+                .setViewResolvers(viewResolver()).setValidator(validator())
+                .setHandlerExceptionResolvers(getSimpleMappingExceptionResolver()).build();
     }
     
     @Test
@@ -105,21 +113,151 @@ public class AdminBukuControllerTest {
         Mockito.verifyZeroInteractions(bookService);
     }
     
-    
+    @Test
     public void addFailTest()throws Exception{        
         
-        mockMvc.perform(fileUpload("/admin/book/add")
-                .param("title", "Java Effective")
-                .param("author", "Josuha Bloch")
-                .param("description", "Good Java Book")
-                .param("price", "90000")
+        MockMultipartFile file = new MockMultipartFile("file", "orig", null, "bar".getBytes());
+        Book bookToSave=new BookBuilder().author("Agung Setiawan")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        mockMvc.perform(fileUpload("/admin/book/add").file(file)
+//                .param("title", "Java in Nutshell")
+                .param("author", "Agung Setiawan")
+                .param("description", "Java book for intermediate")
+                .param("price", "85000")
                 .param("category", "1")
-                .param("image", "java-effective")
-                .param("fileUpload", "image"))
-                .andExpect(status().is(302))
-                .andExpect(view().name("admin/template"))
-                .andExpect(forwardedUrl("/WEB-INF/jsp/admin/templateno"))
+                .param("image", "java-in-nutshell")
+                .param("fileUpload", "image")
+                .sessionAttr("book", bookToSave))
+                .andExpect(status().is(200))
+                .andExpect(view().name("admin/templateno"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/admin/templateno.jsp"))
                 .andExpect(model().attributeHasFieldErrors("book", "title"));
+    }
+    
+//    @Test
+    public void addTest() throws Exception{
+        
+        Book bookToSave=new BookBuilder().author("Agung Setiawan").title("Java in Nutshell")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        Book bookSaved=new BookBuilder().id(1L).author("Agung Setiawan").title("Java in Nutshell")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        MockMultipartFile file = new MockMultipartFile("file", "orig", "jpg", "bar".getBytes());
+        
+        Mockito.when(bookService.save(bookToSave)).thenReturn(bookSaved);
+        
+        mockMvc.perform(fileUpload("/admin/book/add").file(file)
+                .param("title", "Java in Nutshell")
+                .param("author", "Agung Setiawan")
+                .param("description", "Java book for intermediate")
+                .param("price", "85000")
+                .param("category", "1")
+                .param("image", "java-in-nutshell")
+                .sessionAttr("book", bookToSave))
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/admin/book?save"))
+                .andExpect(redirectedUrl("/admin/book?save"));
+//                .andExpect(flash().attribute("title", "Java in Nutshell"));
+        
+        Mockito.verify(bookService,Mockito.times(1)).save(bookToSave);
+        Mockito.verifyNoMoreInteractions(bookService);
+    }
+    
+    @Test
+    public void editFormNotFound() throws Exception{
+        Mockito.when(bookService.findOne(1L)).thenReturn(null);
+        mockMvc.perform(get("/admin/book/edit/{id}",1L))
+                .andExpect(view().name("404s"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/404s.jsp"));
+    }
+    
+    @Test
+    public void editFormTest() throws Exception{
+        Book book=new BookBuilder().id(1L).author("Agung Setiawan").title("Java in Nutshell")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        Mockito.when(bookService.findOne(1L)).thenReturn(book);
+        
+         mockMvc.perform(get("/admin/book/edit/{id}",1L))
+                .andExpect(view().name("admin/templateno"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/admin/templateno.jsp"))
+                .andExpect(model().attribute("book", book))
+                .andExpect(model().attribute("page", "bookEditForm.jsp"))
+                .andExpect(model().attribute("book", hasProperty("id", is(1L))))
+                .andExpect(model().attribute("book", hasProperty("author", is("Agung Setiawan"))))
+                .andExpect(model().attribute("book", hasProperty("title", is("Java in Nutshell"))))
+                .andExpect(model().attribute("book", hasProperty("price", is(new BigDecimal(85000)))))
+                .andExpect(model().attribute("book", hasProperty("description", is("Java book for intermediate"))))
+                .andExpect(model().attribute("book", hasProperty("image", is("java-in-nutshell"))));
+         
+         Mockito.verify(bookService,Mockito.times(1)).findOne(1L);
+         Mockito.verifyNoMoreInteractions(bookService);
+    }
+    
+    @Test
+    public void editFailTest()throws Exception{        
+        
+        MockMultipartFile file = new MockMultipartFile("file", "orig", null, "bar".getBytes());
+        Book bookToSave=new BookBuilder().id(1L).author("Agung Setiawan")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        mockMvc.perform(fileUpload("/admin/book/edit").file(file)
+//                .param("title", "Java in Nutshell")
+                .param("author", "Agung Setiawan")
+                .param("description", "Java book for intermediate")
+                .param("price", "85000")
+                .param("category", "1")
+                .param("image", "java-in-nutshell")
+                .param("fileUpload", "image")
+                .sessionAttr("book", bookToSave))
+                .andExpect(status().is(200))
+                .andExpect(view().name("admin/templateno"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/admin/templateno.jsp"))
+                .andExpect(model().attributeHasFieldErrors("book", "title"))
+                .andExpect(model().attribute("book", hasProperty("id",is(1L))));
+    }
+    
+    public void editTest(){
+        
+    }
+    
+    @Test
+    public void deleteNotFoundTest() throws Exception{
+        Mockito.when(bookService.findOne(1L)).thenReturn(null);
+        mockMvc.perform(get("/admin/book/delete/{id}",1L))
+                .andExpect(view().name("404s"))
+                .andExpect(forwardedUrl("/WEB-INF/jsp/404s.jsp"));
+    }
+    
+    @Test
+    public void deleteTest()throws Exception{
+        Book bookDelete=new BookBuilder().id(1L).author("Agung Setiawan").title("Java in Nutshell")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        Book bookDeleted=new BookBuilder().id(1L).author("Agung Setiawan").title("Java in Nutshell")
+                         .price(new BigDecimal(85000)).description("Java book for intermediate")
+                         .image("java-in-nutshell").build();
+        
+        Mockito.when(bookService.findOne(1L)).thenReturn(bookDelete);
+        Mockito.when(bookService.delete(bookDelete)).thenReturn(bookDeleted);
+        
+        mockMvc.perform(get("/admin/book/delete/{id}",1L))
+                .andExpect(status().is(302))
+                .andExpect(view().name("redirect:/admin/book?delete"))
+                .andExpect(redirectedUrl("/admin/book?delete"))
+                .andExpect(flash().attribute("title", "Java in Nutshell"));
+        
+        Mockito.verify(bookService, Mockito.times(1)).findOne(1L);
+        Mockito.verify(bookService,Mockito.times(1)).delete(bookDelete);
+        Mockito.verifyNoMoreInteractions(bookService);
     }
     
     private LocalValidatorFactoryBean validator() {
@@ -132,5 +270,28 @@ public class AdminBukuControllerTest {
         viewResolver.setPrefix("/WEB-INF/jsp/");
         viewResolver.setSuffix(".jsp");
         return viewResolver;
+    }
+    
+    public SimpleMappingExceptionResolver getSimpleMappingExceptionResolver() {
+        SimpleMappingExceptionResolver exceptionResolver = new SimpleMappingExceptionResolver();
+
+        Properties exceptionMappings = new Properties();
+
+        exceptionMappings.put(NotFoundException.class.getName(), "404s");
+        exceptionMappings.put(ConstraintViolationException.class.getName(), "409");
+//        exceptionMappings.put("java.lang.Exception", "404");
+//        exceptionMappings.put("java.lang.RuntimeException", "404");
+
+        exceptionResolver.setExceptionMappings(exceptionMappings);
+//        exceptionResolver.setDefaultErrorView("404s");
+        exceptionResolver.setOrder(0);
+//        Properties statusCodes = new Properties();
+//
+//        statusCodes.put("404", "404");
+//        statusCodes.put("error/error", "500");
+//
+//        exceptionResolver.setStatusCodes(statusCodes);
+
+        return exceptionResolver;
     }
 }

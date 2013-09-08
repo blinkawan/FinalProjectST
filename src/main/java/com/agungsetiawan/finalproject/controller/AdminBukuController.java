@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.support.DefaultMultipartHttpServletRequest;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -35,7 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
  * @author awanlabs
  */
 @Controller
-//@SessionAttributes("book")
+@SessionAttributes("book")
 public class AdminBukuController implements HandlerExceptionResolver {
     
     @Autowired
@@ -68,26 +70,26 @@ public class AdminBukuController implements HandlerExceptionResolver {
     }
 
     @RequestMapping(value = "admin/book/add",method = RequestMethod.POST)
-    public String add(@Valid @ModelAttribute("book") Book book,@RequestParam(required = false) MultipartFile fileUpload
-                    ,HttpServletRequest request, BindingResult result,Model model
+    public String add(HttpServletRequest request,@RequestParam(required = false) MultipartFile fileUpload,@Valid @ModelAttribute("book") Book book
+                    , BindingResult result,Model model
                     , RedirectAttributes redirectAttributes) throws IOException{
         
         if(result.hasErrors()){
             model.addAttribute("categories", categoryService.findAll());
             model.addAttribute("showError", 1);
             model.addAttribute("page","bookForm.jsp");
-            fileUpload.getContentType();
-            request.getAuthType();
-            redirectAttributes.getClass();
             return "admin/templateno";
         }else{
+//            DefaultMultipartHttpServletRequest dmhsRequest = (DefaultMultipartHttpServletRequest) request ;
+//            MultipartFile fileUpload = (MultipartFile) dmhsRequest.getFile("fileUpload");
             if(fileUpload!=null){
              fileUpload.transferTo(new File(request.getSession().getServletContext().getRealPath("/")+"/img/"+fileUpload.getOriginalFilename()));
-             bookService.save(book);
-             redirectAttributes.addFlashAttribute("title", book.getTitle());
+             Book bookSaved=bookService.save(book);
+             redirectAttributes.addFlashAttribute("title", bookSaved.getTitle());
             }
             return "redirect:/admin/book?save";
         }
+        
     }
     
     @RequestMapping(value = "admin/book/edit/{id}",method = RequestMethod.GET)
