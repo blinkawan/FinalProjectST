@@ -30,7 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author awanlabs
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @WebAppConfiguration
 @ContextConfiguration(classes=WebAppConfigTest.class)
@@ -47,7 +47,7 @@ public class LoginControllerIT {
         mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
     
-    @Test
+//    @Test
     public void loginFormTest() throws Exception{
         mockMvc.perform(get("/public/login/form"))
                 .andExpect(status().isOk())

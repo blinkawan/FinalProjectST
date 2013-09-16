@@ -187,4 +187,28 @@ public class OrderServiceImplTest {
         Assert.assertEquals("baru", actual.get(1).getStatus());
         
     }
+    
+    @Test
+    public void editTest(){
+        Order orderToUpdate=new OrderBuilder().id(1L).city("Semarang").date(new Date(2013, 6, 26))
+                              .province("Jawa Tengah").receiver("Agung Setiawan").receiverEmail("blinkawan@gmail.com")
+                              .receiverPhone("089667754239").shippingAddress("Semarang 2").status("baru")
+                              .build();
+        
+        Order orderUpdated=new OrderBuilder().id(1L).city("Semarang").date(new Date(2013, 6, 26))
+                              .province("Jawa Tengah").receiver("Agung Setiawan").receiverEmail("blinkawan@gmail.com")
+                              .receiverPhone("089667754239").shippingAddress("Semarang 2").status("selesai")
+                              .build();
+        
+        Mockito.when(orderDao.edit(orderToUpdate)).thenReturn(orderUpdated);
+        
+        Order actual=orderServiceImpl.edit(orderToUpdate);
+        
+        Mockito.verify(orderDao,Mockito.times(1)).edit(orderToUpdate);
+        Mockito.verifyNoMoreInteractions(orderDao);
+        
+        Assert.assertNotNull(actual);
+        Assert.assertEquals("blinkawan@gmail.com", actual.getReceiverEmail());
+        Assert.assertEquals("selesai", actual.getStatus());
+    }
 }

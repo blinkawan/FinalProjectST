@@ -106,8 +106,8 @@ public class AdminBukuController implements HandlerExceptionResolver {
     }
     
     @RequestMapping(value = "admin/book/edit",method = RequestMethod.POST)
-    public String edit(@Valid Book book,BindingResult bindingResult,Model model
-                        ,RedirectAttributes redirectAttributes){
+    public String edit(HttpServletRequest request,@RequestParam(required = false) MultipartFile fileUpload,@Valid Book book,BindingResult bindingResult,Model model
+                        ,RedirectAttributes redirectAttributes) throws IOException{
         
         if(bindingResult.hasErrors()){
             model.addAttribute("categories", categoryService.findAll());
@@ -115,6 +115,10 @@ public class AdminBukuController implements HandlerExceptionResolver {
             model.addAttribute("page", "bookEditForm.jsp");
             return "admin/templateno";
         }else{
+            if(fileUpload!=null){
+             fileUpload.transferTo(new File(request.getSession().getServletContext().getRealPath("/")+"/img/"+fileUpload.getOriginalFilename()));
+            }
+    
             bookService.edit(book);
             redirectAttributes.addFlashAttribute("title", book.getTitle());
             return "redirect:/admin/book?edit";

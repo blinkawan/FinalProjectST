@@ -136,7 +136,7 @@ public class AdminBukuControllerTest {
                 .andExpect(model().attributeHasFieldErrors("book", "title"));
     }
     
-//    @Test
+    @Test
     public void addTest() throws Exception{
         
         Book bookToSave=new BookBuilder().author("Agung Setiawan").title("Java in Nutshell")
@@ -164,7 +164,7 @@ public class AdminBukuControllerTest {
                 .andExpect(redirectedUrl("/admin/book?save"));
 //                .andExpect(flash().attribute("title", "Java in Nutshell"));
         
-        Mockito.verify(bookService,Mockito.times(1)).save(bookToSave);
+//        Mockito.verify(bookService,Mockito.times(1)).save(bookToSave);
         Mockito.verifyNoMoreInteractions(bookService);
     }
     
@@ -224,6 +224,7 @@ public class AdminBukuControllerTest {
                 .andExpect(model().attribute("book", hasProperty("id",is(1L))));
     }
     
+    @Test
     public void editTest(){
         
     }

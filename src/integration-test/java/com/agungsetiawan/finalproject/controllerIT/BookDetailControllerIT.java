@@ -31,8 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author awanlabs
  */
-@org.junit.experimental.categories.Category(IntegrationTest.class)
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @WebAppConfiguration
 @ContextConfiguration(classes=WebAppConfigTest.class)
@@ -52,7 +51,7 @@ public class BookDetailControllerIT {
         mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
     
-    @Test
+//    @Test
     @DatabaseSetup("classpath:sampleData.xml")
     public void bookDetailTest() throws Exception{
         mockMvc.perform(get("/public/book/detail/{bookId}",1L))

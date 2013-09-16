@@ -20,7 +20,7 @@
                 <p>${book.description}</p>
             </div>
             <div id="buy" >
-                 <p class="price">Price : $ ${book.price}</p>
+                 <p class="price">Harga : Rp ${book.price}</p>
                  <form method="post" action="<c:url value="/public/cart/add/${book.id}" />">
                      <input type="submit" value="Add To Cart"/>
                  </form>
@@ -28,14 +28,14 @@
 
         </div>
 
-        <h2>Recommended</h2>
+<!--        <h2>Rekomendasi</h2>
+        <c:forEach items="${recommendBooks}" var="book">
             <div class="bookBox">
-                <p class="title">Yii Framework: Menguasai Framework PHP Terbaik</p>
-                <img class="thumbnail" src="<c:url value="/img/yii.jpg"/>"/>
-                <p class="price">Our Price : $40</p>
-                <a href=""><img src="<c:url value="/img/buy-button.png"/>"/></a>
+                <p class="title"><a href="<c:url value="/public/book/detail/${book.id}" />">${book.title}</></p>
+                <img width="129" class="thumbnail" src="<c:url value="/img/${book.image}.jpg"/>"/></a>
+                <p class="price">Harga : Rp. ${book.price}</p>
+                <img src="<c:url value="/img/buy-button.png"/>"/>
             </div>
-
-            
+        </c:forEach>   -->
     </body>
 </html>

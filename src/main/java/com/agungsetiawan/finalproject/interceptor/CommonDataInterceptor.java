@@ -37,7 +37,7 @@ public class CommonDataInterceptor implements WebRequestInterceptor{
     @Override
     public void postHandle(WebRequest wr, ModelMap model) throws Exception {
         model.addAttribute("listCategory", categoryService.findAll());
-        model.addAttribute("randomBooks", bookService.findRandom());
+        model.addAttribute("randomBooks", bookService.findRandomFive());
         model.addAttribute("cartSize", cartService.size());
     }
 

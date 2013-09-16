@@ -109,11 +109,11 @@ public class OrderDaoHibernateImplIT {
         assertEquals("Java Super", listOrderDetail.get(0).getBook().getTitle());
     }
     
-    @Test
-    public void findOneNotFoundTest(){
-        Order orderNull=orderDao.findOne(3L);
-        assertNull(orderNull);
-    }
+//    @Test
+//    public void findOneNotFoundTest(){
+//        Order orderNull=orderDao.findOne(3L);
+//        assertNull(orderNull);
+//    }
     
     @Test
     @DatabaseSetup("classpath:sampleData.xml")

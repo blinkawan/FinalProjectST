@@ -23,10 +23,10 @@ public class Category implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty
+    @NotEmpty(message = "Nama Harus Diisi")
     private String name;
-    @NotEmpty
-    @Length(max = 50,message = "max 50")
+    @NotEmpty(message = "Desripsi Harus Diisi")
+    @Length(max = 50,message = "Maksimal karakter 50")
     private String description;
     
     @OneToMany(mappedBy = "category")

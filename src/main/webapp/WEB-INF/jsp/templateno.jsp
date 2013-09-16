@@ -2,7 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"  %>
 <html>
 <head>
-	<title>Packtpub</title>
+	<title>ST</title>
         <link rel="stylesheet" href="<c:url value="/css/style.css" />" type="text/css"/>
 </head>
 <body>
@@ -46,7 +46,7 @@
                                 </tr>
                                 <tr>
                                     <td>Password:</td>
-                                    <td><input type="text" name="password"/></td>
+                                    <td><input type="password" name="password"/></td>
                                     <td><input type="submit" value="Go"/></td>
                                 </tr>
                                 <tr>

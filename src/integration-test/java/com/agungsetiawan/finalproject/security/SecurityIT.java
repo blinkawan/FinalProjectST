@@ -13,7 +13,7 @@ import static org.hamcrest.Matchers.*;
 @org.junit.experimental.categories.Category(IntegrationTest.class)
 public class SecurityIT {
     
-    @Test
+//    @Test
     public void HakAksesTidakMemadahiTest(){
         given().auth()
        .form("blinkawan", "greatengineer", 
@@ -21,7 +21,7 @@ public class SecurityIT {
        .expect().statusCode(403).when().get("http://localhost:8080/admin");
     }
     
-    @Test
+//    @Test
     public void HakAksesMemadahi(){
         given().auth()
        .form("admin", "admin", 
@@ -29,7 +29,7 @@ public class SecurityIT {
        .expect().statusCode(200).when().get("http://localhost:8080/admin");
     }
     
-    @Test
+//    @Test
     public void HakAksesBelumLogin(){
         given().auth().none()
         .expect().rootPath("http://localhost:8080/public/login/form")

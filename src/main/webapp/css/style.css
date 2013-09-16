@@ -74,7 +74,7 @@ body{
     color:#fa9600;
 }
 
-#header #banner #login input[type=text]{
+#header #banner #login input[type=text],#header #banner #login input[type=password]{
     border-radius: 5px;
     border:1px solid #cfcfcf;
     width:120px;

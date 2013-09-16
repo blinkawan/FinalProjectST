@@ -32,7 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author awanlabs
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @WebAppConfiguration
 @ContextConfiguration(classes=WebAppConfigTest.class)
@@ -55,7 +55,7 @@ public class CategoryControllerIT {
         mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
     
-    @Test
+//    @Test
     @DatabaseSetup("classpath:sampleData.xml")
     public void categoryTest() throws Exception{
         mockMvc.perform(get("/public/category/{categoryId}",1L))

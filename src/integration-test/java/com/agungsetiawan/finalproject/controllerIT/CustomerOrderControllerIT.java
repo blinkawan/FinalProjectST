@@ -37,7 +37,7 @@ import org.springframework.web.context.WebApplicationContext;
  *
  * @author awanlabs
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(SpringJUnit4ClassRunner.class)
 @Transactional
 @WebAppConfiguration
 @ContextConfiguration(classes=WebAppConfigTest.class)
@@ -60,7 +60,7 @@ public class CustomerOrderControllerIT {
         mockMvc= MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
     
-    @Test
+//    @Test
     @DatabaseSetup("classpath:sampleData.xml")
     public void allOrderTest() throws Exception{
         
@@ -87,7 +87,7 @@ public class CustomerOrderControllerIT {
                 ) ));
     }
     
-    @Test
+//    @Test
     @DatabaseSetup("classpath:sampleData.xml")
     public void detailOrderTest() throws Exception{
         

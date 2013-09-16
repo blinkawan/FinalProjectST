@@ -2,7 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"  %>
 <html>
 <head>
-	<title>Packtpub</title>
+	<title>ST</title>
         <link rel="stylesheet" href="<c:url value="/css/style.css" />" type="text/css"/>
 </head>
 <body>
@@ -17,6 +17,10 @@
             		<li><a href="">blog</a></li>
             		<li><a href="">forum</a></li>
             		<li><a href="">hubungi kami</a></li>
+                        <c:url value="/admin/" var="admin"/>
+                        <sec:authorize url="${admin}">
+                        <li><a href="${admin}">Admin</a></li>
+                        </sec:authorize>
             	</ul>
             </div> <!-- batas akhir menu -->
 
@@ -46,7 +50,7 @@
                                 </tr>
                                 <tr>
                                     <td>Password:</td>
-                                    <td><input type="text" name="password"/></td>
+                                    <td><input type="password" name="password"/></td>
                                     <td><input type="submit" value="Go"/></td>
                                 </tr>
                                 <tr>
@@ -112,7 +116,7 @@
                                 <div class="random">
                                     <div class="image">
                                         <!--<img src="<c:url value='/img/${book.image}_small.jpg'/>"/>-->
-                                        <img height="41" width="34" src="<c:url value='/img/${book.image}.jpg'/>"/>
+                                        <a href="/public/book/detail/${book.id}"><img height="41" width="34" src="<c:url value='/img/${book.image}.jpg'/>"/></a>
                                     </div>
                                     <div class="title">
                                         <p>${book.title}</p>

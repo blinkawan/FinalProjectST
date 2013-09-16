@@ -22,15 +22,15 @@ public class Book implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "OJO KOSONG")
+    @NotEmpty(message = "Judul Harus Diisi")
     private String title;
-    @NotEmpty(message = "OJO KOSONG")
+    @NotEmpty(message = "Penulis Harus Diisi")
     private String author;
-    @NotEmpty(message = "OJO KOSONG")
+    @NotEmpty(message = "Deskripsi Harus Diisi")
     private String description;
-    @NotNull(message = "OJO KOSONG")
+    @NotNull(message = "Harga Harus Diisi")
     private BigDecimal price;
-    @NotEmpty(message = "OJO KOSONG")
+    @NotEmpty(message = "Nama File Gambar Harus Diisi")
     private String image;
     
     @ManyToOne

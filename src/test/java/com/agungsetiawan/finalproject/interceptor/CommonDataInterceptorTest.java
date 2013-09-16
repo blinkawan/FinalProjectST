@@ -56,7 +56,7 @@ public class CommonDataInterceptorTest {
 //        List<Book> booksTwo=new ArrayList<Book>();
 //        booksTwo.add(bookThree);
         
-        Mockito.when(bookService.findRandom()).thenReturn(books);
+        Mockito.when(bookService.findRandomFive()).thenReturn(books);
         
         ModelMap modelMap=new ModelMap();
         WebRequest webRequest=Mockito.mock(WebRequest.class);
